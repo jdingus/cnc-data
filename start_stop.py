@@ -7,7 +7,7 @@ def main():
     ''' Parse data in csv file and manipulate as needed and compile start-stop 
     sequence for sqlite3 dbase write. Store ending state during parsing to be 
     used if needed '''
-    start_stop = create_start_stop('cnc570.csv')
+    start_stop = create_start_stop('data_example.csv')
     write_startstop_csv(start_stop) # Once thru file write all start-stop to file
     print len(start_stop)
 
