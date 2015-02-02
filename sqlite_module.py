@@ -4,31 +4,35 @@ import sqlite3 as lite
 import sys
 
 def main():
+    pass
     # drop_data_table()
-    create_data_table()
-    
+    # create_data_table()
+    # write_list_data(1)
 
+def initialize_tables():
+    drop_data_table()
+    create_data_table()
 
 def write_list_data(list_data):
     ''' Take a list of data entry lists and write to a table '''
+    con = lite.connect('test.db')
 
+    with con:
+        cur = con.cursor()    
+        query = 'INSERT INTO [data] VALUES(%s)' % ','.join(['?'] * len(list_data))
+        cur.execute(query, list_data)
 
 def drop_data_table():
     con = lite.connect('test.db')
 
     with con:
-        
         cur = con.cursor()    
-
         cur.execute("DROP TABLE IF EXISTS [data]")
 
 def create_data_table():
     con = lite.connect('test.db')
-
     with con:
-        
         cur = con.cursor()    
-
         cur.execute("\
         CREATE TABLE [data] (\
         [start_time] DATETIME NOT NULL ON CONFLICT ROLLBACK, \
