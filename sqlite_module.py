@@ -13,7 +13,7 @@ def initialize_tables():
     drop_data_table()
     create_data_table()
 
-def write_list_data(list_data):
+def write_list_data():
     ''' Take a list of data entry lists and write to a table '''
     con = lite.connect('test.db')
 
@@ -21,6 +21,20 @@ def write_list_data(list_data):
         cur = con.cursor()    
         query = 'INSERT INTO [data] VALUES(%s)' % ','.join(['?'] * len(list_data))
         cur.execute(query, list_data)
+
+
+def query_list_data():
+    ''' Query entried in the db '''
+    con = lite.connect('test.db')
+    with con:
+        cur = con.cursor()    
+        query = 'SELECT start_time,stop_time,part1_num FROM [data] LIMIT 10'
+        results = cur.execute(query)
+        results=[]
+        for row in cur:
+            results.append(row)
+        print results   
+
 
 def drop_data_table():
     con = lite.connect('test.db')
@@ -35,8 +49,8 @@ def create_data_table():
         cur = con.cursor()    
         cur.execute("\
         CREATE TABLE [data] (\
-        [start_time] DATETIME NOT NULL ON CONFLICT ROLLBACK, \
-        [stop_time] DATETIME NOT NULL ON CONFLICT ROLLBACK, \
+        [start_time] TIMESTAMP NOT NULL ON CONFLICT ROLLBACK, \
+        [stop_time] TIMESTAMP NOT NULL ON CONFLICT ROLLBACK, \
         [cnc_id] text NOT NULL ON CONFLICT ROLLBACK, \
         [prog_num] text, \
         [part1_num] TEXT, \
@@ -52,4 +66,5 @@ def create_data_table():
         [ref_output] float)")
 
 if __name__ == '__main__':
-    main()
+    # main()
+    query_list_data ()

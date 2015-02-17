@@ -1,14 +1,15 @@
 #! /usr/bin/python
 from start_stop import create_start_stop
-from sqlite_module import write_list_data,initialize_tables
+from sqlite_module import write_list_data,initialize_tables,query_list_data
 
 def main():
 
-    start_stop = create_start_stop('data_example.csv')
-    data_entries = listdicts_to_listentries(start_stop)
-    initialize_tables()
-    for item in data_entries:
-            write_list_data(item)
+    # start_stop = create_start_stop('data_example.csv')
+    # data_entries = listdicts_to_listentries(start_stop)
+    # initialize_tables()
+    # for item in data_entries:
+    #         write_list_data(item)
+    query_list_data()
 
 def convert_dict_to_commas(dict_in,col_order):
     '''Takes a dictionary and list of col_order to output in  and creates a csv line 
